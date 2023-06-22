@@ -5,8 +5,32 @@ const TimerScreen = () => {
     const [time, setTime] = useState(0);
     const [running, setRunning] = useState(false);
     const startRef = useRef(null);
+    const [clicks, setClicks] = useState(0);
+    const [theme, setTheme] = useState('light');
+
+    const handleReset = () => {
+        setClicks(0);
+    };
+
+    useEffect(() => {
+        if (clicks === 5) {
+            if (theme === 'light') {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+            handleReset();
+        }
+        else if (clicks > 0) {
+            const timer = setTimeout(handleReset, 300); // Réinitialise le compteur après 1 seconde
+    
+            return () => clearTimeout(timer); // S'assure que le timer est bien nettoyé si le composant est démonté
+        }
+    }, [clicks]);
+
   
     const startTimer = () => {
+        setClicks(prevClicks => prevClicks + 1);
         if (running) {
             cancelAnimationFrame(startRef.current);
             setRunning(false);
@@ -57,6 +81,14 @@ const TimerScreen = () => {
             alignItems: 'center',
             justifyContent: 'center',
         },
+        backGround : {
+            backgroundColor: theme === 'light' ? 'rgba(251, 247, 244, 1)' : 'rgba(0, 0, 0, 1)',
+            width: screenWidth,
+            height: screenHeight,
+            position: 'absolute',
+            top: 0,
+            zIndex: 0,
+        },
         container: {
             marginHorizontal: -200,
         },
@@ -81,7 +113,7 @@ const TimerScreen = () => {
         min: {
             fontSize: minutes > 9 ? 550 : 1100,
             fontFamily: 'AbrilFatface-Regular',
-            color: 'rgba(208, 134, 98, 0.2)',
+            color: theme === 'light' ? 'rgba(208, 134, 98, 0.2)' : 'rgba(255, 255, 255, 0.15)',
             textAlign: 'center',
             backgroundColor: 'transparent',
 
@@ -93,22 +125,22 @@ const TimerScreen = () => {
         },
         sec: {
             fontSize: 300,
-            fontFamily: 'Product-Sans-Bold',
+            fontFamily: theme === 'light' ? 'Product-Sans-Bold' : 'Lexend-Thin',
             textAlign: 'center',
 
-            color: 'rgba(208, 134, 98, 1)',
+            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
         },
         cents: { 
             fontSize: 80,
-            fontFamily: 'Product-Sans-Regular',
+            fontFamily: theme === 'light' ? 'Product-Sans-Regular' : 'Lexend-Thin',
             textAlign: 'center',
 
-            color: 'rgba(208, 134, 98, 1)',
+            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
         },
         minHorizontal: {
             fontSize: minutes > 9 ? 500 : 650,
             fontFamily: 'AbrilFatface-Regular',
-            color: 'rgba(208, 134, 98, 0.2)',
+            color: theme === 'light' ? 'rgba(208, 134, 98, 0.2)' : 'rgba(255, 255, 255, 15)',
             textAlign: 'center',
 
             position: 'absolute',
@@ -119,24 +151,24 @@ const TimerScreen = () => {
         },
         secHorizontal: {
             fontSize: 300,
-            fontFamily: 'Product-Sans-Bold',
+            fontFamily: theme === 'light' ? 'Product-Sans-Bold' : 'Lexend-Thin',
             textAlign: 'center',
 
-            color: 'rgba(208, 134, 98, 1)',
+            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
         },
         centsHorizontal: { 
             fontSize: 80,
-            fontFamily: 'Product-Sans-Regular',
+            fontFamily: theme === 'light' ? 'Product-Sans-Regular' : 'Lexend-Thin',
             textAlign: 'center',
 
-            color: 'rgba(208, 134, 98, 1)',
+            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
         },
 
 
         darkMin: {
             fontSize: minutes > 9 ? 550 : 1100,
             fontFamily: 'AbrilFatface-Regular',
-            color: 'rgba(255, 255, 255, 0.2)',
+            color: 'rgba(255, 255, 255, 0.15)',
             textAlign: 'center',
             backgroundColor: 'transparent',
 
@@ -163,7 +195,7 @@ const TimerScreen = () => {
         darkMinHorizontal: {
             fontSize: minutes > 9 ? 500 : 650,
             fontFamily: 'AbrilFatface-Regular',
-            color: 'rgba(208, 134, 98, 0.2)',
+            color: 'rgba(255, 255, 255, 0.15)',
             textAlign: 'center',
 
             position: 'absolute',
@@ -177,29 +209,30 @@ const TimerScreen = () => {
             fontFamily: 'Product-Sans-Bold',
             textAlign: 'center',
 
-            color: 'rgba(208, 134, 98, 1)',
+            color: 'rgba(255, 255, 255, 1)',
         },
         darkCentsHorizontal: { 
             fontSize: 80,
             fontFamily: 'Product-Sans-Regular',
             textAlign: 'center',
 
-            color: 'rgba(208, 134, 98, 1)',
+            color: 'rgba(255, 255, 255, 1)',
         },
     });
   
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={styles.backGround}/>
             <View style={styles.container}>
-                <Text style={screenHeight > screenWidth ? styles.darkMin : styles.minHorizontal}>
+                <Text style={screenHeight > screenWidth ? styles.min : styles.minHorizontal}>
                     {minutes}
                 </Text>
                 <TouchableOpacity onPress={startTimer} onLongPress={resetTimer} style={styles.button}>
                     <View style={screenHeight > screenWidth ? styles.timer : styles.timerHorizontal}>
-                        <Text style={screenHeight > screenWidth ? styles.darkSec : styles.secHorizontal}>
+                        <Text style={screenHeight > screenWidth ? styles.sec : styles.secHorizontal}>
                             {seconds}
                         </Text>
-                        <Text style={screenHeight > screenWidth ? styles.darkCents : styles.centsHorizontal}>
+                        <Text style={screenHeight > screenWidth ? styles.cents : styles.centsHorizontal}>
                             {centiseconds}
                         </Text>
                     </View>

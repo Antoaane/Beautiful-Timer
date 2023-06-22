@@ -30,20 +30,6 @@ export default function App() {
     container: {
       position: 'relative',
     },
-    backGround : {
-      backgroundColor: 'rgba(251, 247, 244, 1)',
-      width: screenWidth,
-      height: screenHeight,
-      position: 'absolute',
-      zIndex: 0,
-    },
-    darkBackGround: {
-      backgroundColor: 'rgba(0, 0, 0, 1)',
-      width: screenWidth,
-      height: screenHeight,
-      position: 'absolute',
-      zIndex: 0,
-    },
     touchBlocker: {
       width: '100%',
       height: 80,
@@ -55,7 +41,6 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.darkBackGround}/>
       <TimerScreen />
       <View style={StyleSheet.compose(
         styles.touchBlocker, {
