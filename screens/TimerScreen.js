@@ -140,7 +140,7 @@ const TimerScreen = () => {
         minHorizontal: {
             fontSize: minutes > 9 ? 500 : 650,
             fontFamily: 'AbrilFatface-Regular',
-            color: theme === 'light' ? 'rgba(208, 134, 98, 0.2)' : 'rgba(255, 255, 255, 15)',
+            color: theme === 'light' ? 'rgba(208, 134, 98, 0.2)' : 'rgba(255, 255, 255, 0.15)',
             textAlign: 'center',
 
             position: 'absolute',
@@ -162,61 +162,6 @@ const TimerScreen = () => {
             textAlign: 'center',
 
             color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
-        },
-
-
-        darkMin: {
-            fontSize: minutes > 9 ? 550 : 1100,
-            fontFamily: 'AbrilFatface-Regular',
-            color: 'rgba(255, 255, 255, 0.15)',
-            textAlign: 'center',
-            backgroundColor: 'transparent',
-
-            position: 'absolute',
-            top: minutes > 9 ? screenHeight/20 : -screenHeight/2.75,
-            left: minutes > 19 ? -screenWidth/4 : minutes > 9 ? -screenWidth/6 : -screenWidth/4,
-
-            transform: [{ rotate: '20deg'}],
-        },
-        darkSec: {
-            fontSize: 300,
-            fontFamily: 'Lexend-Thin',
-            textAlign: 'center',
-
-            color: 'rgba(255, 255, 255, 1)',
-        },
-        darkCents: { 
-            fontSize: 80,
-            fontFamily: 'Lexend-Thin',
-            textAlign: 'center',
-
-            color: 'rgba(255, 255, 255, 1)',
-        },
-        darkMinHorizontal: {
-            fontSize: minutes > 9 ? 500 : 650,
-            fontFamily: 'AbrilFatface-Regular',
-            color: 'rgba(255, 255, 255, 0.15)',
-            textAlign: 'center',
-
-            position: 'absolute',
-            top: minutes > 9 ? -screenHeight /2 : -screenHeight/1.5,
-            left: minutes > 9 ? -screenWidth /30 : screenWidth/100,
-
-            transform: [{ rotate: '-20deg'}],
-        },
-        darkSecHorizontal: {
-            fontSize: 300,
-            fontFamily: 'Product-Sans-Bold',
-            textAlign: 'center',
-
-            color: 'rgba(255, 255, 255, 1)',
-        },
-        darkCentsHorizontal: { 
-            fontSize: 80,
-            fontFamily: 'Product-Sans-Regular',
-            textAlign: 'center',
-
-            color: 'rgba(255, 255, 255, 1)',
         },
     });
   
