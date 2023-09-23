@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ImageBackground  } from 'react-native';
+import { backGround } from  './components/backGround.js';
 
 const TimerScreen = () => {
     const [time, setTime] = useState(0);
@@ -22,9 +23,9 @@ const TimerScreen = () => {
             handleReset();
         }
         else if (clicks > 0) {
-            const timer = setTimeout(handleReset, 300); // Réinitialise le compteur après 1 seconde
+            const timer = setTimeout(handleReset, 300);
     
-            return () => clearTimeout(timer); // S'assure que le timer est bien nettoyé si le composant est démonté
+            return () => clearTimeout(timer);
         }
     }, [clicks]);
 
@@ -54,17 +55,17 @@ const TimerScreen = () => {
         return () => cancelAnimationFrame(startRef.current);
     }, []);
 
-    const day = Math.floor(time / 86400000);
-    const hour = Math.floor(time / 3600000) % 24;
-    const minutes = Math.floor(time / 60000) % 60;
-    const seconds = Math.floor(time / 1000) % 60;
-    const centiseconds = Math.floor(time / 10) % 100;
+    // const day = Math.floor(time / 86400000);
+    // const hour = Math.floor(time / 3600000) % 24;
+    // const minutes = Math.floor(time / 60000) % 60;
+    // const seconds = Math.floor(time / 1000) % 60;
+    // const centiseconds = Math.floor(time / 10) % 100;
 
-    // const day = 2;
-    // const hour = 1;
-    // const minutes = 26;
-    // const seconds = 27;
-    // const centiseconds = 67;
+    const day = 59;
+    const hour = 1;
+    const minutes = 26;
+    const seconds = 27;
+    const centiseconds = 67;
 
 
     const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
@@ -80,167 +81,74 @@ const TimerScreen = () => {
     }, []);  
 
     const styles = StyleSheet.create({
-        button: {
+        backGround: {
             position: 'relative',
             width: screenWidth,
             height: screenHeight,
-            backgroundColor: 'transparent',
-    
-            alignItems: 'center',
+            backgroundImage: require('../assets/pictures/bg.jpg'),
+
+            display: 'flex',
             justifyContent: 'center',
+            alignItems: 'center',
         },
-        backGround : {
-            backgroundColor: theme === 'light' ? 'rgba(251, 247, 244, 1)' : 'rgba(0, 0, 0, 1)',
+        large: {
+            fontSize: 400,
+            fontFamily: 'Lora-Regular3',
+            color: 'white',
+
+            lineHeight: 460,
+            textAlign: 'center',
+
+            
+        },
+        button: {
+            position: 'absolute',
             width: screenWidth,
             height: screenHeight,
-            position: 'absolute',
-            top: 0,
-            zIndex: 0,
+            backgroundColor: 'transparent',
+
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
         },
-        container: {
-            marginHorizontal: -200,
-        },
-        timer: {
+
+        timerContainer: {
             width: screenWidth,
             height: screenHeight,
 
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-        timerHorizontal: {
-            width: screenWidth / 3 * 2,
-            height: screenHeight,
-            marginLeft: screenWidth / 3,
-        
-            paddingHorizontal: 40,
-
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-        },
-        min: {
-            fontSize: 
-                minutes > 9 && hour < 1 && day < 1      ? 550 : 
-                hour > 9 && day < 1                     ? 550 : 
-                day > 9                                 ? 550 : 
-                                                        1100,
-
-            fontFamily: 'AbrilFatface-Regular',
-            color: theme === 'light' ? 'rgba(208, 134, 98, 0.2)' : 'rgba(255, 255, 255, 0.15)',
-            textAlign: 'center',
             backgroundColor: 'transparent',
 
-            position: 'absolute',
-            top: 
-                minutes > 9 && hour < 1 && day < 1      ? screenHeight/20 : 
-                hour > 9 && day < 1                     ? screenHeight/20 : 
-                day > 9                                 ? screenHeight/20 : 
-                                                        -screenHeight/2.75,
-
-            left: 
-                minutes > 19 && hour < 1                ? -screenWidth/4 : 
-                hour > 19 && day < 1                    ? -screenWidth/4 :
-                day > 19                                ? -screenWidth/4 :
-                minutes > 9 && hour < 1                 ? -screenWidth/6 : 
-                hour > 9 && day < 1                     ? -screenWidth/6 :
-                day > 9                                 ? -screenWidth/6 :
-                                                        -screenWidth/4,
-
-            transform: [{ rotate: '20deg'}],
-        },
-        sec: {
-            fontSize: 300,
-            fontFamily: theme === 'light' ? 'Product-Sans-Bold' : 'Lexend-Thin',
-            textAlign: 'center',
-
-            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
-        },
-        cents: { 
-            fontSize: 80,
-            fontFamily: theme === 'light' ? 'Product-Sans-Regular' : 'Lexend-Thin',
-            textAlign: 'center',
-
-            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
-        },
-        minHorizontal: {
-            fontSize: 
-                minutes > 9 && hour < 1 && day < 1      ? 500 : 
-                hour > 9 && day < 1                     ? 500 : 
-                day > 9                                 ? 500 : 
-                                                        650,
-            fontFamily: 'AbrilFatface-Regular',
-            color: theme === 'light' ? 'rgba(208, 134, 98, 0.2)' : 'rgba(255, 255, 255, 0.15)',
-            textAlign: 'center',
-
-            position: 'absolute',
-            top: 
-                minutes > 9 && hour < 1 && day < 1      ? -screenHeight/2 : 
-                hour > 9 && day < 1                     ? -screenHeight/2 : 
-                day > 9                                 ? -screenHeight/2 : 
-                                                        -screenHeight/1.5,
-            left: 
-                minutes > 9 && hour < 1 && day < 1      ? -screenWidth /30 : 
-                hour > 9 && day < 1                     ? -screenWidth /30 : 
-                day > 9                                 ? -screenWidth /30 : 
-                                                        screenWidth/100,
-            transform: [{ rotate: '-20deg'}],
-        },
-        secHorizontal: {
-            fontSize: 300,
-            fontFamily: theme === 'light' ? 'Product-Sans-Bold' : 'Lexend-Thin',
-            textAlign: 'center',
-
-            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
-        },
-        centsHorizontal: { 
-            fontSize: 80,
-            fontFamily: theme === 'light' ? 'Product-Sans-Regular' : 'Lexend-Thin',
-            textAlign: 'center',
-
-            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
-        },
-        bonusTime: {
-            display: hour >= 1 ? 'flex' : 'none',
-
-            fontSize: 80,
-            fontFamily: theme === 'light' ? 'Lexend-Thin' : 'Product-Sans-Italic',
-            textAlign: 'center',
-        
-            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
-        },
-        bonusTimeHorizontal: {
-            display: hour >= 1 ? 'flex' : 'none',
-
-            fontSize: 80,
-            fontFamily: theme === 'light' ? 'Lexend-Thin' : 'Product-Sans-Italic',
-            textAlign: 'center',
-
-            color: theme === 'light' ? 'rgba(208, 134, 98, 1)' : 'rgba(255, 255, 255, 1)'
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
         },
     });
   
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={styles.backGround}/>
-            <View style={styles.container}>
-                <Text style={screenHeight > screenWidth ? styles.min : styles.minHorizontal}>
+        <ImageBackground source={require('../assets/pictures/bg.jpg')} style={styles.backGround}>
+            <View style={styles.timerContainer}>
+                <Text style={styles.large}>
                     {day >= 1 ? day : hour >= 1 ? hour : minutes}
                 </Text>
-                <TouchableOpacity onPress={startTimer} onLongPress={resetTimer} style={styles.button}>
-                    <View style={screenHeight > screenWidth ? styles.timer : styles.timerHorizontal}>
-                        <Text style={screenHeight > screenWidth ? styles.bonusTime : styles.bonusTimeHorizontal}>
-                            {day >= 1 ? seconds : hour >= 1 ? centiseconds : centiseconds}
-                        </Text>
-                        <Text style={screenHeight > screenWidth ? styles.sec : styles.secHorizontal}>
-                            {day >= 1 ? hour : hour >= 1 ? minutes : seconds}
-                        </Text>
-                        <Text style={screenHeight > screenWidth ? styles.cents : styles.centsHorizontal}>
-                            {day >= 1 ? minutes : hour >= 1 ? seconds : centiseconds}
-                        </Text>
-                    </View>
-                </TouchableOpacity>
             </View>
-        </View>
+            <TouchableOpacity 
+                onPress={startTimer} 
+                onLongPress={resetTimer}
+                style={styles.button}
+            >
+                <View>
+                    <Text>
+                        {day >= 1 ? seconds : hour >= 1 ? centiseconds : centiseconds}
+                    </Text>
+                    <Text>
+                        {day >= 1 ? hour : hour >= 1 ? minutes : seconds}
+                    </Text>
+                    <Text>
+                        {day >= 1 ? minutes : hour >= 1 ? seconds : centiseconds}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        </ImageBackground>
     );
 };
 
