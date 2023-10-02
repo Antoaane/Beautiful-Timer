@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ImageBackground  } from 'react-native';
-import { backGround } from  './components/backGround.js';
+import Wave from './svgs/Wave';
 
 const TimerScreen = () => {
     const [time, setTime] = useState(0);
@@ -86,21 +86,66 @@ const TimerScreen = () => {
             width: screenWidth,
             height: screenHeight,
             backgroundImage: require('../assets/pictures/bg.jpg'),
+            backgroundPosition: 'center',
 
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
         },
-        large: {
+        Wave: {
+            top: -screenHeight-100,
+            left: screenWidth-150,
+            height: screenHeight+200,
+            backgroundColor: 'transparent',
+
+            display: 'flex',
+            flexDirection: 'row',
+        },
+        wave1: {
+            width: screenWidth,
+        },
+        wave2: {
+            width: screenWidth,
+        },
+        wave3: {
+            width: screenWidth,
+        },
+
+        timeExtraLarge: {
             fontSize: 400,
             fontFamily: 'Lora-Regular3',
-            color: 'white',
+            color: '#E8A27F',
 
             lineHeight: 460,
             textAlign: 'center',
-
-            
         },
+        timeLarge: {
+            fontSize: 200,
+            fontFamily: 'Lexend-Bold',
+            color: '#E8A27F',
+
+            lineHeight: 230,
+            textAlign: 'center',
+        },
+        timeMedium: {
+            fontSize: 100,
+            fontFamily: 'Lexend-Regular',
+            color: '#E8A27F',
+
+            lineHeight: 115,
+            textAlign: 'center',
+        },
+        timeSmall: {
+            fontSize: 50,
+            fontFamily: 'Lexend-Thin',
+            color: '#E8A27F',
+
+            display: hour >= 1 ? 'flex' : 'none',
+
+            lineHeight: 57.5,
+            textAlign: 'center',
+        },
+
         button: {
             position: 'absolute',
             width: screenWidth,
@@ -113,6 +158,7 @@ const TimerScreen = () => {
         },
 
         timerContainer: {
+            position: 'absolute',
             width: screenWidth,
             height: screenHeight,
 
@@ -126,8 +172,15 @@ const TimerScreen = () => {
   
     return (
         <ImageBackground source={require('../assets/pictures/bg.jpg')} style={styles.backGround}>
+            <View
+                style={styles.Wave}
+            >
+                <Wave style={styles.wave1}/>
+                <Wave style={styles.wave2}/>
+                <Wave style={styles.wave3}/>
+            </View>
             <View style={styles.timerContainer}>
-                <Text style={styles.large}>
+                <Text style={styles.timeExtraLarge}>
                     {day >= 1 ? day : hour >= 1 ? hour : minutes}
                 </Text>
             </View>
@@ -137,13 +190,19 @@ const TimerScreen = () => {
                 style={styles.button}
             >
                 <View>
-                    <Text>
+                    <Text
+                        style={styles.timeSmall}
+                    >
                         {day >= 1 ? seconds : hour >= 1 ? centiseconds : centiseconds}
                     </Text>
-                    <Text>
+                    <Text
+                        style={styles.timeLarge}
+                    >
                         {day >= 1 ? hour : hour >= 1 ? minutes : seconds}
                     </Text>
-                    <Text>
+                    <Text
+                        style={styles.timeMedium}
+                    >
                         {day >= 1 ? minutes : hour >= 1 ? seconds : centiseconds}
                     </Text>
                 </View>
