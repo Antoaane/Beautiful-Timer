@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ImageBackground  } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ImageBackground, Animated  } from 'react-native';
 import Wave from './svgs/Wave';
 
 const TimerScreen = () => {
@@ -55,6 +55,13 @@ const TimerScreen = () => {
         return () => cancelAnimationFrame(startRef.current);
     }, []);
 
+    // Animation qui déplace la vague de haut en bas
+    Animated.timing(this.positionWave, {
+        toValue: screenHeight-200,
+        duration: 10000,
+        useNativeDriver: true,
+    }).start();
+
     // const day = Math.floor(time / 86400000);
     // const hour = Math.floor(time / 3600000) % 24;
     // const minutes = Math.floor(time / 60000) % 60;
@@ -93,7 +100,7 @@ const TimerScreen = () => {
             alignItems: 'center',
         },
         Wave: {
-            top: -screenHeight-100,
+            top: this.positionWave,
             left: screenWidth-150,
             height: screenHeight+200,
             backgroundColor: 'transparent',
@@ -172,13 +179,13 @@ const TimerScreen = () => {
   
     return (
         <ImageBackground source={require('../assets/pictures/bg.jpg')} style={styles.backGround}>
-            <View
+            <Animated.View
                 style={styles.Wave}
             >
                 <Wave style={styles.wave1}/>
                 <Wave style={styles.wave2}/>
                 <Wave style={styles.wave3}/>
-            </View>
+            </Animated.View>
             <View style={styles.timerContainer}>
                 <Text style={styles.timeExtraLarge}>
                     {day >= 1 ? day : hour >= 1 ? hour : minutes}
