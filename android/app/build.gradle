@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.bf"
+    namespace "com.beautifultimer"
     defaultConfig {
-        applicationId "com.bf"
+        applicationId "com.beautifultimer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

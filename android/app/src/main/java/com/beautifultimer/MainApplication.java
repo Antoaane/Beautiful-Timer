@@ -1,4 +1,4 @@
-package com.bigtimer;
+package com.beautifultimer;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
