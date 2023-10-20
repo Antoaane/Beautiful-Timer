@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Text,
+  ScaledSize,
 } from 'react-native';
 
 export default function App() {
@@ -18,10 +20,11 @@ export default function App() {
   const [screenHeight, setScreenHeight] = useState(Dimensions.get('window').height);
 
   useEffect(() => {
-    const onChange = ({ window: { width, height } }) => {
+    const onChange = ({ window }: { window: ScaledSize }) => {
+      const { width, height } = window;
       setScreenWidth(width);
       setScreenHeight(height);
-  };
+    };
 
   Dimensions.addEventListener('change', onChange);
   }, []);
