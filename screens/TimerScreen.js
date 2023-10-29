@@ -66,20 +66,28 @@ const TimerScreen = () => {
         return () => cancelAnimationFrame(startRef.current);
     }, []);
 
+    const animationRef = useRef(null); // Ajouté pour stocker l'instance de l'animation
+
     // Animation verticale
     useEffect(() => {
-        const up = Animated.timing(positionWave, {
-        toValue: -screenHeight,
-        duration: 59000,
-        useNativeDriver: true,
-        });
-        const down = Animated.timing(positionWave, {
-        toValue: 0,
-        duration: 1000,
-        useNativeDriver: true,
-        });
-        const combined = Animated.sequence([up, down]);
-        Animated.loop(combined).start();
+        if (running) {
+            const up = Animated.timing(positionWave, {
+                toValue: -(screenHeight+50),
+                duration: 59000,
+                easing: Easing.linear,
+                useNativeDriver: true,
+            });
+            const down = Animated.timing(positionWave, {
+                toValue: 0,
+                duration: 1000,
+                useNativeDriver: true,
+            });
+            const combined = Animated.sequence([up, down]);
+            animationRef.current = Animated.loop(combined); // Stocke l'instance de l'animation
+            animationRef.current.start(); // Démarre l'animation
+        } else if (animationRef.current) {
+            animationRef.current.stop(); // Arrête l'animation
+        }
     }, [running]);
 
     // Animation horizontale
@@ -124,9 +132,9 @@ const TimerScreen = () => {
             alignItems: 'center',
         },
         Wave: {
-            top: -75, // corrigé
+            top: -50, // corrigé
             left: 200,
-            height: screenHeight+200,
+            height: screenHeight+250,
             backgroundColor: 'transparent',
             display: 'flex',
             flexDirection: 'row',
@@ -150,19 +158,17 @@ const TimerScreen = () => {
             textAlign: 'center',
         },
         timeLargeStroke: {
-            fontSize: 200,
+            fontSize: 250,
             fontFamily: 'Lexend-Regular-strokes',
             color: '#E8A27F',
 
-            lineHeight: 230,
             textAlign: 'center',
         },
         timeMediumStroke: {
-            fontSize: 100,
+            fontSize: 75,
             fontFamily: 'Lexend-Regular-strokes',
             color: '#E8A27F',
 
-            lineHeight: 115,
             textAlign: 'center',
         },
         timeSmallStroke: {
@@ -185,19 +191,17 @@ const TimerScreen = () => {
             textAlign: 'center',
         },
         timeLarge: {
-            fontSize: 200,
+            fontSize: 250,
             fontFamily: 'Lexend-Regular',
             color: '#FFEADE',
 
-            lineHeight: 230,
             textAlign: 'center',
         },
         timeMedium: {
-            fontSize: 100,
+            fontSize: 75,
             fontFamily: 'Lexend-Regular',
             color: '#FFEADE',
 
-            lineHeight: 115,
             textAlign: 'center',
         },
         timeSmall: {
